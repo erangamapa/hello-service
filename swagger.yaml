@@ -1,0 +1,70 @@
+---
+  swagger: "2.0"
+  info: 
+    version: "0.0.1"
+    title: "Greet Service"
+    description: "API to handle hello greeting"
+    termsOfService: "#"
+    contact:
+      name: "Eranga Mapa"
+    license:
+      name: "MIT"
+  schemes:
+    - "http"
+  
+  securityDefinitions:
+    Bearer:
+      type: apiKey
+      name: authorization
+      in: header
+      description: Requests should include valid jwt token in Bearer method to the header of every request.
+
+  security: 
+  - Bearer: []
+
+  produces:
+    - "application/json"
+  paths:
+
+    /hello:
+      get:
+        description: "Greet an authenticated user"
+        operationId: "hello"
+        produces:
+          - "application/json"
+
+        responses: 
+          "200":
+            description: "User greeting"
+            schema: 
+              $ref: "#/definitions/SuccessResponse"
+          "401":
+            description: "User Unauthenticated"
+            schema: 
+              $ref: "#/definitions/ErrorResponse"
+                
+          default: 
+            description: "Error occoured"
+            schema: 
+              $ref: "#/definitions/ErrorResponse"
+  definitions:
+    SuccessResponse:
+      type: "object"
+      required: 
+        - "success"
+        - "message"
+      properties: 
+        success: 
+          type: "string"
+        message: 
+          type: "string"
+    ErrorResponse:
+      type: "object"
+      required: 
+        - "success"
+        - "message"
+      properties: 
+        success: 
+          type: "string"
+        message: 
+          type: "string"
